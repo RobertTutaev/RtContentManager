@@ -1,0 +1,26 @@
+<h2><?php echo $this->translate('Catalog of content languages') ?></h2>
+
+<table class="MWPTABLE">
+     <tr>
+         <th style="text-align:left"><?php echo $this->translate('Name');?></th>
+         <th style="text-align:right"><a href="<?php echo $this->url('contentmanager/lang/add', array(
+             'lang'=> $this->Lang(), 
+             'page'=> $this->Param('page')));?>"title="<?php echo $this->translate('Add') ?>"><img src="/img/mwp_icons_empty.png" class="mwp-nbtn mwp-nbtn-add"></a></th>
+     </tr>
+     <?php foreach ($this->paginator as $row) : // <-- change here! ?>
+         <tr>
+             <td><?php echo $row->GetName();?></td>             
+             <td align="right">
+                 <a href="<?php echo $this->url('contentmanager/lang/edit', array(
+                     'lang'=> $this->Lang(), 
+                     'id' => $row->GetLangId()));?>" title="<?php echo $this->translate('Edit') ?>"><img src="/img/mwp_icons_empty.png" class="mwp-nbtn mwp-nbtn-upd"></a>
+                 <a href="#" title="<?php echo $this->translate('Delete') ?>" 
+                    onClick=
+                        "if(confirm('<?php echo $this->translate('All related records will be deleted! Are you sure you want to delete?') ?>')) {
+                        href='<?php echo $this->url('contentmanager/lang/delete', array(
+                            'lang'=> $this->Lang(), 
+                            'id' => $row->GetLangId()));?>';} else return false;"><img src="/img/mwp_icons_empty.png" class="mwp-nbtn mwp-nbtn-del"></a>             
+             </td>
+         </tr>
+     <?php endforeach; ?>
+ </table>

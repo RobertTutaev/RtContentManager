@@ -1,0 +1,58 @@
+<!-- Файл необходимо добавить для обработки контента на странице -->
+<script  type="text/javascript"> 
+    $(document).ready(function(){        
+    
+        var rt_message_done    ="<?php echo $this->translate('Connection error!') ?>";
+        var rt_message_back    ="«<?php echo $this->translate('Hide') ?>";
+        var rt_message_readmore="<?php echo $this->translate('Read more') ?>»";
+
+        //Показать развернутую информацию
+        function rt_show_div(number){
+            $('#vsh'+number).css('display','none');
+            $('#vsf'+number).css('display','');
+            if ($('#lnk'+number).val()!=='3')
+                $('#cnt'+number).html(rt_message_back);
+        }
+
+        //Функция получения данных по средствам AJAX
+        $('[id ^= cnt]').click(function(e){
+            e.preventDefault();
+            var number=$(e.target).attr('id').substr(3,14);
+            
+            if ($('#pag'+number).val()) {
+                location.href=$(e.target).attr('href');
+            } else {
+                //Если полная информация уже отображена, то скрываем ее
+                if ($('#vsf'+number).css('display')!=='none') {
+                    if ($('#typ'+number).val()==='2'||$('#typ'+number).val()==='3')
+                        $('#vsh'+number).css('display','');
+
+                    $('#vsf'+number).css('display','none');
+                    if ($('#lnk'+number).val()!=='3')
+                        $('#cnt'+number).html(rt_message_readmore);
+                //Если полная информация не отображена
+                } else {
+                    if ($('#vsf'+number).html()==='') 
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo $this->url('contentmanager/content/geta', array(
+                                         'lang'=> $this->Lang()));?>",
+                            data: {result : JSON.stringify({idd:number})},
+                            dataType: 'html',
+                            success: function(msg){
+                                if (JSON.parse(msg).v!=='') {
+                                    $('#vsf'+number).html(JSON.parse(msg).v);
+                                    rt_show_div(number);
+                                }
+                            },
+                            error: function(xhr,status,error){
+                                alert(rt_message_done+' ['+error+']');
+                            }
+                        });
+                    else
+                        rt_show_div(number);
+                }
+            }
+        });
+    });
+</script>

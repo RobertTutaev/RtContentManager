@@ -1,0 +1,23 @@
+<h2><?php echo $this->translate('Add content type') ?></h2>
+
+<?php     
+    $form = $this->form;
+    $form->prepare();
+?>
+<?php echo $this->form()->openTag($form) ?>
+
+    <dl class="zend_form">        
+    <?php foreach ($form as $element): ?>
+    <?php if ($element->getLabel() != null): ?>
+        <dt><?php echo $this->translate($this->formLabel($element)); ?></dt>
+    <?php endif ?>
+        <dd><?php echo $this->formElement($element) . $this->translate($this->formElementErrors($element)) ?></dd>
+    <?php endforeach ?>                
+    </dl>
+    <?php if ($this->redirect): ?>
+        <input type="hidden" name="redirect" value="<?php echo $this->redirect ?>" />
+    <?php endif ?>
+    <input class="btn btn-success" type="submit" value="<?php echo $this->translate('Add'); ?>" />
+    <a class="btn btn-info" href="<?php echo $this->url('contentmanager/contenttype', array(
+        'lang' => $this->Lang())); ?>"><?php echo $this->translate('Cancel') ?></a>
+<?php echo $this->form()->closeTag() ?>

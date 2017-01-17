@@ -1,0 +1,32 @@
+<?php foreach ($this->paginator as $row): ?>
+
+    <?php
+        $type   =$row->GetContentType()->GetDisplayType();
+        $d_dt   =$row->GetContentType()->GetDisplayDt();
+        $d_user =$row->GetContentType()->GetDisplayUser();
+    ?>
+    
+    <?php if($this->zfcUserIdentity()) if($this->zfcUserIdentity()->getRule4()): ?>
+        <a href="<?php echo $this->url('contentmanager/content/edit', array('id'=>$row->GetContentId(), 'lang'=> $this->lang)); ?>" title="<?php echo $this->translate('Edit'); ?>"><img src="/img/mwp_icons_empty.png" class="mwp-nbtn mwp-nbtn-content"></a>
+    <?php endif?>
+
+    <?php echo ($type!=3&&$type!=5?$row->GetContentType()->GetTagOpen().$row->GetName().$row->GetContentType()->GetTagClose():'') ?>   
+    
+    <?php echo $row->GetValuefl() ?>
+    
+    <?php echo
+        ($d_dt||$d_user?'<br><font size="1" color="green">'.
+            ($d_dt  ?$row->GetDt()->format('Y-m-d').' ':'').
+            ($d_user?$row->GetUser()->GetFirstName().' '.$row->GetUser()->GetLastName():'').
+            '</font>'
+            :''
+        )
+    ?>
+
+    <?php if(!$this->noback): ?>
+        <br>
+        <br>
+        <a class="btn btn-info" href="<?php echo $this->link ?>">&#8592;&nbsp;<?php echo $this->translate('Back') ?></a>
+    <?php endif; ?>    
+    
+<?php endforeach; ?>

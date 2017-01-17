@@ -1,0 +1,32 @@
+<?php
+
+return array(
+    //Пути до сущностей\
+    /*
+    'content_entity' => array(
+        'content'       => '\Application\Entity\Content',
+        'contentType'   => '\Application\Entity\ContentType',
+        'lang'          => '\Application\Entity\Lang',
+    ),
+     */
+    
+    //Лимит записей на странице при отображении результата
+    /*
+    'limit' => array(
+        content     => 20,
+        contentType => 20,
+    ),
+    */  
+    
+    //Маршрут для врзврата на предыдущую страницу (по умолчанию), если зашли с другого сайта
+    /*
+    'content_default_url' => 'home',
+     */
+    
+    /*
+     * Важно!!!
+     * Не забываем добавлять в начале страницы javascript-обработчик 
+     * для обработки действий пользователя связанных с контентом:
+     * <?php echo $this->partial('rtcontent_script'); ?>
+     */
+);
